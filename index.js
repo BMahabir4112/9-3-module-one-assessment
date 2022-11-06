@@ -137,15 +137,12 @@ function countByRating(movies) {
     };
  */
 function findById(movies, id) {
-
-  movieAndId = {}
-
   for (let i = 0; i < movies.length; i++) {
-    if (movies[i].imdbID === id){
-      return movies[i]
-    } 
+    if (movies[i].imdbID === id) {
+      return movies[i];
+    }
   }
-  return null
+  return null;
 }
 
 /**
@@ -169,14 +166,14 @@ function findById(movies, id) {
  *  //> []
  */
 function filterByGenre(movies, genre) {
-  genreArr = []
+  let genreArr = [];
 
   for (let i = 0; i < movies.length; i++) {
-    if (movies[i].genre.toLowerCase().includes(genre.toLowerCase())){
-      genreArr.push(movies[i])
+    if (movies[i].genre.toLowerCase().includes(genre.toLowerCase())) {
+      genreArr.push(movies[i]);
     }
   }
-  return genreArr
+  return genreArr;
 }
 
 /**
@@ -201,7 +198,23 @@ function filterByGenre(movies, genre) {
       }
     ];
  */
-function getAllMoviesReleasedAtOrBeforeYear() {}
+function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
+  let movieArr = [];
+
+  if (movies.length === 0) {
+    return movieArr;
+  }
+
+  // console.log(movies[0].released.split(' ').pop())
+
+  for (let i = 0; i < movies.length; i++) {
+    if (movies[i].released.split(" ").pop() <= year) {
+      movieArr.push(movies[i]);
+    }
+  }
+
+  return movieArr;
+}
 
 /**
  * getBiggestBoxOfficeMovie()
@@ -214,22 +227,21 @@ function getAllMoviesReleasedAtOrBeforeYear() {}
  *  getBiggestBoxOfficeMovie(movies);
  *  //> "Incredibles 2"
  */
-function getBiggestBoxOfficeMovie(movies){
+function getBiggestBoxOfficeMovie(movies) {
+  let highestBox = 0;
+  let highestBoxTitle;
 
-let highestBox = 0;
-let highestBoxTitle
+  // console.log(Number(movies[1].boxOffice.slice(1).split(",").join("")))
 
-for (let i = 0; i < movies.length; i++) {
-  if (Number(movies[i].boxOffice.slice(10).split(",").join("")) > highestBox) {
-    highestBox = movies[i].metascore;
-    highestBoxTitle = movies[i].title
+  for (let i = 0; i < movies.length; i++) {
+    if (Number(movies[i].boxOffice.slice(1).split(",").join("")) > highestBox) {
+      highestBox = Number(movies[i].boxOffice.slice(1).split(",").join(""));
+      highestBoxTitle = movies[i].title;
+    }
   }
-}
-if (movies.length === 0){
-  return null
-} else return highestBoxTitle
-
-
+  if (movies.length === 0) {
+    return null;
+  } else return highestBoxTitle;
 }
 // Number(arr[i].slice (9) .split(",") .join("'"'))
 
